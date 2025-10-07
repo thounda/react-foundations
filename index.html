@@ -4,45 +4,60 @@
   </head>
   <body>
     <div id="app"></div>
+    <!--
+    To use React in your newly created project, load two React scripts from an external website called unpkg.com:
+
+* react is the core React library.
+* react-dom provides DOM-specific methods that enable you to use React with the DOM.
+    -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 
     <!--
-If you look at the DOM elements inside your browser developer tools, you will notice the DOM includes the <h1> element. The DOM of the page is different from the source code - or in other words, the original HTML file you created.
+Instead of directly manipulating the DOM with plain JavaScript, remove the DOM methods that you had added previously, and add the ReactDOM.createRoot() method to target a specific DOM element and create a root to display your React Components in. Then, add the root.render() method to render your React code to the DOM.
 
-    This is because the HTML represents the initial page content, whereas the DOM represents the updated page content which was changed by the JavaScript code you wrote.
-
-Updating the DOM with plain JavaScript is very powerful but verbose. You've written all this code to add an <h1> element with some text:
+This will tell React to render our <h1> title inside our #app element.
 -->
 
-    <script type="text/javascript">
-      // Select the div element with 'app' id
+    <!-- Babel Script
+
+    In addition, you will need to inform Babel what code to transform by changing the script type to type=text/jsx. 
+    -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/jsx">
+
+
       const app = document.getElementById("app");
-
-      // Create a new H1 element
-      const header = document.createElement("h1");
-
-      // Create a new text node for the H1 element
-      const text = "Develop. Preview. Ship.";
-      const headerContent = document.createTextNode(text);
-
-      // Append the text to the H1 element
-      header.appendChild(headerContent);
-
-      // Place the H1 element inside the div
-      app.appendChild(header);
+      const root = ReactDOM.createRoot(app);
+      root.render(<h1>Develop. Preview. Ship.</h1>);
     </script>
 
     <!--
-As the size of an app or team grows, it can become increasingly challenging to build applications this way.
+Comparing the declarative React code written in branch 'ch03' (imperative code) vs this branch 'ch04' - you can start to see how using React enables you to cut down a lot of repetitive code.
 
-With this approach, developers spend a lot of time writing instructions to tell the computer how it should do things. But wouldn't it be nice to describe what you want to show and let the computer figure out how to update the DOM?
-Imperative vs. declarative programming
-The code above is a good example of imperative programming. You're writing the steps for how the user interface should be updated. But when it comes to building user interfaces, a declarative approach is often preferred because it can speed up the development process. Instead of having to write DOM methods, it would be helpful if developers were able to declare what they want to show (in this case, an h1 tag with some text).
+And this is exactly what React does, it's a library that contains reusable snippets of code that perform tasks on your behalf - in this case, updating the UI.
 
-In other words, imperative programming is like giving a chef step-by-step instructions on how to make a pizza. 
+Essential JavaScript for React
 
-Declarative programming is like ordering a pizza without being concerned about the steps it takes to make the pizza. 
+While you can learn JavaScript and React at the same time, being familiar with JavaScript can make the process of learning React easier.
 
-React is a popular declarative library that you can use build user interfaces.
+In the next set of code examples, you will be introduced to some core concepts of React from a JavaScript perspective. 
+
+Here's a summary of the JavaScript topics that will be mentioned:
+
+- Functions and Arrow Functions
+- Objects
+- Arrays and array methods
+- Destructuring
+- Template literals
+- Ternary Operators
+- ES Modules and Import / Export Syntax
+
+While this course does not dive into JavaScript, it's good practice to stay up to date with the latest versions of JavaScript. 
+
+But if you don't feel proficient in JavaScript yet, don't let this hinder you from starting to build with React!
+
 -->
   </body>
 </html>
