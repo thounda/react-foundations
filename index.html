@@ -14,34 +14,29 @@
 
       // Get the DOM element where the app should be mounted
             const app = document.getElementById('app');
-
-            // Creating components
-            // In React, components are functions.
-            function Header() {
-              // A component is a function that returns UI elements (JSX).
-              // It's best practice to wrap your returned JSX in parentheses,
-              // and add a semicolon after the closing brace.
-
-              /* A component is a function that returns UI elements. Inside the return statement of the function, you can write JSX
-
-              React components should be capitalized to distinguish them from plain HTML and JavaScript.
-              .
-              */
+            function Header({title}) {
+               console.log(title);
 
               return (
-                <h1>Develop. Preview. Ship.</h1>
+                <h1>{title}</h1>
               );
             }
 
-            /*
-           Notes on code snippet
-            */
-
             function HomePage() {
-              return <div>
+              // Add the following array of names to HomePage component
+
+              const names = ['Ada Lovelace', 'Grace Hopper', 'Margaret Hamilton'];
+
+              return (<div>
                 {/* Nesting the Header component */}
-                  <Header />
-              </div>;
+                  <Header title="React" />
+                  <ul>
+                    {names.map((name) => (
+                      <li key={name} >{name}</li>
+                    ))}
+                  </ul>
+              </div>
+              );
             }
 
             // Create a React root
@@ -53,6 +48,121 @@
     <!--
 Displaying Data with Props
 
+So far, if you were to reuse your <Header /> component, it would display the same content both times.
+
+But what if you want to pass different text or you don't know the information ahead of time because you're fetching data from an external source?
+
+Regular HTML elements have attributes that you can use to pass pieces of information that change the behavior of those elements. For example, changing the src attribute of an <img> element changes the image that is shown. Changing the href attribute of an <a> tag changes the destination of the link.
+
+In the same way, you can pass pieces of information as properties to React components. These are called props. Take for instance, the possible variations of a button:
+
+Similar to a JavaScript function, you can design components that accept custom arguments (or props) that change the component's behavior or what is visibly shown when it's rendered to the screen. Then, you can pass down these props from parent components to child components.
+
+Using props
+
+In your HomePage component, you can pass a custom title prop to the Header component, just like you'd pass HTML attributes:
+
+And Header, the child component, can accept those props as its first function parameter.
+
+If you console.log() props, you can see that it's an object with a title property.
+
+Thus, since props is an object, you can use object destructuring to explicitly name the values of props inside your function parameters.
+
+Then you can replace the content of the <h1> tag with your title variable - wrapped in JSX (see explanation, below).
+
+Using variables in JSX
+
+To use the title prop, add curly braces {}. These are a special JSX syntax that allows you to write regular JavaScript directly inside your JSX markup.
+
+You can think of curly braces as a way to enter "JavaScript land" while you are in "JSX land". You can add any JavaScript expression (something that evaluates to a single value) inside curly braces. For example:
+
+1. An object property with dot notation:
+
+2. A template literal
+
+3. The returned value of a function
+
+4. or tenary operators
+
+You can now pass any string to your title prop, or, if you used the ternary operator, you could even not pass a title prop at all, since you've accounted for the default case in your component.
+
+Your component now accepts a generic title prop which you can reuse in different parts of your application. All you need to do is change the title string:
+
+[code]
+function HomePage() {
+  return (
+    <div>
+      <Header title="React" />
+      <Header title="A new title" />
+    </div>
+  );
+}
+[/code]
+
+Iterating through lists
+
+It's common to have data that you need to show as a list. You can use array methods to manipulate your data and generate UI elements that are identical in style but hold different pieces of information.
+
+Add the following array of names to your HomePage component:
+
+[code]
+function HomePage() {
+  const names = ['Ada Lovelace', 'Grace Hopper', 'Margaret Hamilton'];
+ 
+  return (
+    <div>
+      <Header title="Develop. Preview. Ship." />
+      <ul>
+        {names.map((name) => (
+          <li>{name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+[/code]
+
+You can then use the array.map() method to iterate over the array and use an arrow function to map a name to a list item:
+
+[code]
+function HomePage() {
+  const names = ['Ada Lovelace', 'Grace Hopper', 'Margaret Hamilton'];
+ 
+  return (
+    <div>
+      <Header title="Develop. Preview. Ship." />
+      <ul>
+        {names.map((name) => (
+          <li>{name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+[/code]
+
+Notice how you've used curly braces to weave in and out of "JavaScript" and "JSX" land.
+
+If you run this code, React will give us a warning about a missing key prop. This is because React needs something to uniquely identify items in an array so it knows which elements to update in the DOM.
+
+You can use the names for now since they are currently unique, but it's recommended to use something guaranteed to be unique, like an item ID.
+
+[code]
+function HomePage() {
+  const names = ['Ada Lovelace', 'Grace Hopper', 'Margaret Hamilton'];
+ 
+  return (
+    <div>
+      <Header title="Develop. Preview. Ship." />
+      <ul>
+        {names.map((name) => (
+          <li key={name}>{name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+[/code]
 -->
   </body>
 </html>
