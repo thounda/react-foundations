@@ -1,62 +1,67 @@
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8" />
+    <title>My First React App</title>
   </head>
   <body>
     <div id="app"></div>
-    <!--
-    To use React in your newly created project, load two React scripts from an external website called unpkg.com:
 
-* react is the core React library.
-* react-dom provides DOM-specific methods that enable you to use React with the DOM.
-    -->
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-
-    <!--
-Instead of directly manipulating the DOM with plain JavaScript, remove the DOM methods that you had added previously, and add the ReactDOM.createRoot() method to target a specific DOM element and create a root to display your React Components in. Then, add the root.render() method to render your React code to the DOM.
-
-This will tell React to render our <h1> title inside our #app element.
--->
-
-    <!-- Babel Script
-
-    In addition, you will need to inform Babel what code to transform by changing the script type to type=text/jsx. 
-    -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script type="text/jsx">
 
+      // Get the DOM element where the app should be mounted
+            const app = document.getElementById('app');
 
-      const app = document.getElementById("app");
-      const root = ReactDOM.createRoot(app);
-      root.render(<h1>Develop. Preview. Ship.</h1>);
+            // Creating components
+            // In React, components are functions.
+            function Header() {
+              // A component is a function that returns UI elements (JSX).
+              // It's best practice to wrap your returned JSX in parentheses,
+              // and add a semicolon after the closing brace.
+
+              /* A component is a function that returns UI elements. Inside the return statement of the function, you can write JSX
+
+              React components should be capitalized to distinguish them from plain HTML and JavaScript.
+              .
+              */
+
+              return (
+                <h1>Develop. Preview. Ship.</h1>
+              );
+            }
+
+            /*
+            Applications usually include more content than a single component. You can nest React components inside each other like you would regular HTML elements.
+
+            In your example, create a new component called HomePage & then nest the <Header> component inside the new <HomePage>component
+            */
+
+            function HomePage() {
+              return <div>
+                {/* Nesting the Header component */}
+                  <HomePage />
+              </div>;
+            }
+
+            // Create a React root
+            const root = ReactDOM.createRoot(app);
+
+            // To render this component to the DOM, pass it as the first argument in the root.render() method:
+            root.render(<Header />);
     </script>
-
     <!--
-Comparing the declarative React code written in branch 'ch03' (imperative code) vs this branch 'ch04' - you can start to see how using React enables you to cut down a lot of repetitive code.
+Component trees
 
-And this is exactly what React does, it's a library that contains reusable snippets of code that perform tasks on your behalf - in this case, updating the UI.
+You can keep nesting React components this way to form component trees.
 
-Essential JavaScript for React
+For example, your top-level HomePage component could hold a Header, an Article, and a Footer Component. And each of those components could in turn have their own child components and so on. For example, the Header component could contain a Logo, Title and Navigation component.
 
-While you can learn JavaScript and React at the same time, being familiar with JavaScript can make the process of learning React easier.
+This modular format allows you to reuse components in different places inside your app.
 
-In the next set of code examples, you will be introduced to some core concepts of React from a JavaScript perspective. 
-
-Here's a summary of the JavaScript topics that will be mentioned:
-
-- Functions and Arrow Functions
-- Objects
-- Arrays and array methods
-- Destructuring
-- Template literals
-- Ternary Operators
-- ES Modules and Import / Export Syntax
-
-While this course does not dive into JavaScript, it's good practice to stay up to date with the latest versions of JavaScript. 
-
-But if you don't feel proficient in JavaScript yet, don't let this hinder you from starting to build with React!
+In this example, since <HomePage> is now your top-level component, we pass it to the root.render() method instead of the Header component
 
 -->
   </body>
