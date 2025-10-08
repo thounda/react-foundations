@@ -1,121 +1,59 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>My First React App</title>
-  </head>
   <body>
     <div id="app"></div>
 
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
     <script type="text/jsx">
+      const app = document.getElementById("app")
 
-      // Get the DOM element where the app should be mounted
-            const app = document.getElementById('app');
-            function Header({title}) {
-               console.log(title);
+      function Header({ title }) {
+        return <h1>{title ? title : "Default title"}</h1>
+      }
 
-              return (
-                <h1>{title}</h1>
-              );
-            }
+      function HomePage() {
+        const names = ["Ada Lovelace", "Grace Hopper", "Margaret Hamilton"]
 
-            function HomePage() {
-              // Add the following array of names to HomePage component
+        const [likes, setLikes] = React.useState(0)
 
-              const names = ['Ada Lovelace', 'Grace Hopper', 'Margaret Hamilton'];
+        function handleClick() {
+          setLikes(likes + 1)
+          console.log(`Increment Likes count - ${likes}`)
+        }
 
-              // Add useState()
-              const [likes, setLikes] = React.useState(0);
+        return (
+          <div>
+            <Header title="Develop. Preview. Ship." />
+            <ul>
+              {names.map((name) => (
+                <li key={name}>{name}</li>
+              ))}
+            </ul>
 
-              function handleClick() {
-                setLikes(likes + 1);
-                console.log(`increment like ${likes} counts`)
-              }
+            <button onClick={handleClick}>Like ({likes})</button>
+          </div>
+        )
+      }
 
-              return (<div>
-                {/* Nesting the Header component */}
-                  <Header title="React - Develop. Preview. Ship." />
-                  <ul>
-                    {names.map((name) => (
-                      <li key={name} >{name}</li>
-                    ))}
-                  </ul>
-                  <button onClick={handleClick}>Like ({likes})</button>
-              </div>
-              );
-            }
-
-            // Create a React root
-            const root = ReactDOM.createRoot(app);
-
-            // To render this component to the DOM, pass it as the first argument in the root.render() method:
-            root.render(<HomePage />);
+      const root = ReactDOM.createRoot(app);
+      root.render(<HomePage />);
     </script>
+
     <!--
-Adding Interactivity with State
+From React to Next.js
+So far, we explored how you can get started with React. This is what the final code looked like. If you're starting from here, paste this code into an index.html file in your code editor.
 
-Let's explore how React helps us add interactivity with state and event handlers.
+In the last few chapters, you were introduced to three essential React concepts: components, props, and state. Having a strong foundation in these will help you get started building React applications.
 
-As an example, let's create a "Like" button inside your HomePage component. First, add a button element inside the return() statement.  To make the button do something when clicked, you can use the onClick event.
+When it comes to learning React, the best way to learn is to build. You can gradually adopt React by using <script> and what you've learned so far to add small components to an existing website. However, many developers have found the user and developer experience React enables valuable enough to dive right in and write their whole frontend application in React.
 
-In React, event names are camelCased. The onClick event is one of many possible events you can use to respond to user interaction. For example, you can use onChange for input fields or onSubmit for forms.
+From React to Next.js
+While React excels at building UI, it does take some work to independently build that UI into a fully functioning scalable application. There are also newer React features, like Server and Client Components, that require a framework. The good news is that Next.js handles much of the setup and configuration and has additional features to help you build React applications.
 
-Handling events
-You can define a function to "handle" events whenever they are triggered. Create a function before the return statement called handleClick().
-
-Then, you can call the handleClick function when the onClick event is triggered as shown in the code, above.
-
-fya: Try running this in your browser. Notice in your developer tools how the log output increases.
-
-State and hooks
-React has a set of functions called hooks. Hooks allow you to add additional logic such as state to your components. You can think of state as any information in your UI that changes over time, usually triggered by user interaction.
-
-You can use state to store and increment the number of times a user has clicked the "Like" button. In fact, the React hook used to manage state is called: useState()
-
-Add useState() to your project. It returns an array, and you can access and use those array values inside your component using array destructuring:
-
-[code]
-function HomePage() {
-  // ...
-  const [likes, setLikes] = React.useState();
- 
-  // ...
-}
-[/code]
-
-You can also take the opportunity to add the initial value of your likes state to 0.
-
-Then, you can check the initial state is working by using the state variable inside your component.
-
-[code]
-function HomePage() {
-  // ...
-  const [likes, setLikes] = React.useState(0);
- 
-  function handleClick() {
-    setLikes(likes + 1);
-  }
- 
-  return (
-    <div>
-      {/* ... */}
-      <button onClick={handleClick}>Likes ({likes})</button>
-    </div>
-  );
-}
-[/code]
-
-Finally, you can call your state updater function, setLikes in your HomePage component, let's add it inside the handleClick() function you previously defined - see example above as well...
-
-Clicking the button will now call the handleClick function, which calls the setLikes state updater function with a single argument of the current number of likes + 1.
-
-Note: Unlike props which are passed to components as the first function parameter, the state is initiated and stored within a component. You can pass the state information to children components as props, but the logic for updating the state should be kept within the component where state was initially created.
-
-Managing state
-This was only an introduction to state, and there's more you can learn about managing state and data flow in your React applications. To learn more, we recommend you go through the Adding Interactivity and Managing State sections in the React official documentation.
+Next, we'll migrate the example from React to Next.js, discuss how Next.js works, and introduce you to the differences between Server and Client Components.
 
 -->
   </body>
