@@ -27,6 +27,14 @@
 
               const names = ['Ada Lovelace', 'Grace Hopper', 'Margaret Hamilton'];
 
+              // Add useState()
+              const [likes, setLikes] = React.useState(0);
+
+              function handleClick() {
+                setLikes(likes + 1);
+                console.log("increment like counts")
+              }
+
               return (<div>
                 {/* Nesting the Header component */}
                   <Header title="React" />
@@ -35,6 +43,7 @@
                       <li key={name} >{name}</li>
                     ))}
                   </ul>
+                  <button onClick={handleClick}>Like ({likes})</button>
               </div>
               );
             }
@@ -46,123 +55,68 @@
             root.render(<HomePage />);
     </script>
     <!--
-Displaying Data with Props
+Adding Interactivity with State
 
-So far, if you were to reuse your <Header /> component, it would display the same content both times.
+Let's explore how React helps us add interactivity with state and event handlers.
 
-But what if you want to pass different text or you don't know the information ahead of time because you're fetching data from an external source?
+As an example, let's create a "Like" button inside your HomePage component. First, add a button element inside the return() statement.  To make the button do something when clicked, you can use the onClick event.
 
-Regular HTML elements have attributes that you can use to pass pieces of information that change the behavior of those elements. For example, changing the src attribute of an <img> element changes the image that is shown. Changing the href attribute of an <a> tag changes the destination of the link.
+In React, event names are camelCased. The onClick event is one of many possible events you can use to respond to user interaction. For example, you can use onChange for input fields or onSubmit for forms.
 
-In the same way, you can pass pieces of information as properties to React components. These are called props. Take for instance, the possible variations of a button:
+Handling events
+You can define a function to "handle" events whenever they are triggered. Create a function before the return statement called handleClick().
 
-Similar to a JavaScript function, you can design components that accept custom arguments (or props) that change the component's behavior or what is visibly shown when it's rendered to the screen. Then, you can pass down these props from parent components to child components.
+Then, you can call the handleClick function when the onClick event is triggered as shown in the code, above.
 
-Using props
+fya: Try running this in your browser. Notice in your developer tools how the log output increases.
 
-In your HomePage component, you can pass a custom title prop to the Header component, just like you'd pass HTML attributes:
+State and hooks
+React has a set of functions called hooks. Hooks allow you to add additional logic such as state to your components. You can think of state as any information in your UI that changes over time, usually triggered by user interaction.
 
-And Header, the child component, can accept those props as its first function parameter.
+You can use state to store and increment the number of times a user has clicked the "Like" button. In fact, the React hook used to manage state is called: useState()
 
-If you console.log() props, you can see that it's an object with a title property.
-
-Thus, since props is an object, you can use object destructuring to explicitly name the values of props inside your function parameters.
-
-Then you can replace the content of the <h1> tag with your title variable - wrapped in JSX (see explanation, below).
-
-Using variables in JSX
-
-To use the title prop, add curly braces {}. These are a special JSX syntax that allows you to write regular JavaScript directly inside your JSX markup.
-
-You can think of curly braces as a way to enter "JavaScript land" while you are in "JSX land". You can add any JavaScript expression (something that evaluates to a single value) inside curly braces. For example:
-
-1. An object property with dot notation:
-
-2. A template literal
-
-3. The returned value of a function
-
-4. or tenary operators
-
-You can now pass any string to your title prop, or, if you used the ternary operator, you could even not pass a title prop at all, since you've accounted for the default case in your component.
-
-Your component now accepts a generic title prop which you can reuse in different parts of your application. All you need to do is change the title string:
+Add useState() to your project. It returns an array, and you can access and use those array values inside your component using array destructuring:
 
 [code]
 function HomePage() {
-  return (
-    <div>
-      <Header title="React" />
-      <Header title="A new title" />
-    </div>
-  );
+  // ...
+  const [likes, setLikes] = React.useState();
+ 
+  // ...
 }
 [/code]
 
-Iterating through lists
+You can also take the opportunity to add the initial value of your likes state to 0.
 
-It's common to have data that you need to show as a list. You can use array methods to manipulate your data and generate UI elements that are identical in style but hold different pieces of information.
-
-Add the following array of names to your HomePage component:
+Then, you can check the initial state is working by using the state variable inside your component.
 
 [code]
 function HomePage() {
-  const names = ['Ada Lovelace', 'Grace Hopper', 'Margaret Hamilton'];
+  // ...
+  const [likes, setLikes] = React.useState(0);
+ 
+  function handleClick() {
+    setLikes(likes + 1);
+  }
  
   return (
     <div>
-      <Header title="Develop. Preview. Ship." />
-      <ul>
-        {names.map((name) => (
-          <li>{name}</li>
-        ))}
-      </ul>
+      {/* ... */}
+      <button onClick={handleClick}>Likes ({likes})</button>
     </div>
   );
 }
 [/code]
 
-You can then use the array.map() method to iterate over the array and use an arrow function to map a name to a list item:
+Finally, you can call your state updater function, setLikes in your HomePage component, let's add it inside the handleClick() function you previously defined - see example above as well...
 
-[code]
-function HomePage() {
-  const names = ['Ada Lovelace', 'Grace Hopper', 'Margaret Hamilton'];
- 
-  return (
-    <div>
-      <Header title="Develop. Preview. Ship." />
-      <ul>
-        {names.map((name) => (
-          <li>{name}</li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-[/code]
+Clicking the button will now call the handleClick function, which calls the setLikes state updater function with a single argument of the current number of likes + 1.
 
-Notice how you've used curly braces to weave in and out of "JavaScript" and "JSX" land.
+Note: Unlike props which are passed to components as the first function parameter, the state is initiated and stored within a component. You can pass the state information to children components as props, but the logic for updating the state should be kept within the component where state was initially created.
 
-If you run this code, React will give us a warning about a missing key prop. This is because React needs something to uniquely identify items in an array so it knows which elements to update in the DOM.
+Managing state
+This was only an introduction to state, and there's more you can learn about managing state and data flow in your React applications. To learn more, we recommend you go through the Adding Interactivity and Managing State sections in the React official documentation.
 
-You can use the names for now since they are currently unique, but it's recommended to use something guaranteed to be unique, like an item ID.
-
-[code]
-function HomePage() {
-  const names = ['Ada Lovelace', 'Grace Hopper', 'Margaret Hamilton'];
- 
-  return (
-    <div>
-      <Header title="Develop. Preview. Ship." />
-      <ul>
-        {names.map((name) => (
-          <li key={name}>{name}</li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-[/code]
 -->
   </body>
 </html>
