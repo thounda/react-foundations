@@ -32,12 +32,12 @@
 
               function handleClick() {
                 setLikes(likes + 1);
-                console.log("increment like counts")
+                console.log(`increment like ${likes} counts`)
               }
 
               return (<div>
                 {/* Nesting the Header component */}
-                  <Header title="React" />
+                  <Header title="React - Develop. Preview. Ship." />
                   <ul>
                     {names.map((name) => (
                       <li key={name} >{name}</li>
